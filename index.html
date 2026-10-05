@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator</title>
+</head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<style>
+    h1,
+    code,
+    a,
+    textarea,
+    button,
+    span,
+    #generateContainer {
+        display: grid;
+        place-items: center;
+        margin: auto;
+    }
+
+    #sliderContainer {
+        margin: 20px 50px;
+    }
+</style>
+<body>
+    <h1>Password Generator</h1>
+    <span id="lengthValue">64</span>
+    <div id="sliderContainer">
+        <p class="range-field">
+            <input type="range" id="range" min="0" max="100" value="50" />
+        </p>
+        <div class="input-field">
+            <input placeholder="Character Set" id="charset" type="text" class="validate">
+            <label for="charset">Character Set</label>
+        </div>
+    </div>
+    <div id="generateContainer"><a id="generate" class="waves-effect waves-light btn">Generate Password</a></div>
+    <br><br>
+    <code id="output"></code>
+    <script>
+        document.getElementById("charset").value = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]:;?><,./-=\\"
+        document.getElementById("generate").addEventListener("click", generatePassword);
+        const rangeElem = document.getElementById("range");
+        rangeElem.addEventListener("input", function() {
+            document.getElementById("lengthValue").textContent = this.value;
+        });
+        function generatePassword() {
+            const length = document.getElementById("range").value;
+            document.getElementById("lengthValue").textContent = length;
+            const charset = document.getElementById("charset").value;
+            let password = "";
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * charset.length);
+                password += charset[randomIndex];
+            }
+            document.getElementById("output").textContent = password;
+        }
+    </script>
+</body>
+</html>
